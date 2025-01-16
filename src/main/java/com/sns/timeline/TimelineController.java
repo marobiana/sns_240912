@@ -19,6 +19,8 @@ public class TimelineController {
         List<PostEntity> postList = postBO.getPostList();
         model.addAttribute("postList", postList);
 
+        // +댓글
+
         return "timeline/timeline";
     }
 }
