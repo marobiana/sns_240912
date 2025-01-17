@@ -3,10 +3,7 @@ package com.sns.comment;
 import com.sns.comment.bo.CommentBO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +14,14 @@ import java.util.Map;
 public class CommentRestController {
     private final CommentBO commentBO;
 
-    // TODO Post로 바꿀 예정
-    @GetMapping("/create")
+    /**
+     * 댓글 쓰기 API
+     * @param postId
+     * @param content
+     * @param session
+     * @return
+     */
+    @PostMapping("/create")
     public Map<String, Object> create(
             @RequestParam("postId") int postId,
             @RequestParam("content") String content,

@@ -78,8 +78,8 @@
 
                         <!-- 댓글 쓰기 -->
                         <div class="comment-write d-flex border-top mt-2">
-                            <input type="text" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
-                            <button type="button" class="comment-btn btn btn-light">게시</button>
+                            <input type="text" th:id="|content${post.id}|" class="comment-input form-control border-0 mr-2" placeholder="댓글 달기">
+                            <button type="button" th:id="|comment${post.id}|" class="comment-btn btn btn-light" th:data-post-id="${post.id}">게시</button>
                         </div>
                     </div> <!-- 댓글 끝 -->
                 </div> <!-- 카드 끝 -->
@@ -184,8 +184,35 @@
 
             // 댓글 쓰기
             $(".comment-btn").on("click", function() {
-                alert("댓글");
+                let postId = $(this).data("post-id");
+                //alert(postId);
+
+                //let commentContent = $(this).siblings("input").val().trim();
+                //let commentContent = $(this).prev().val().trim();
+                let commentContent = $("#content" + postId).val().trim();
+                //alert(commentContent);
+
+                $.ajax({
+                    type:"post"
+                    , url:"/comment/create"
+                    , data:{"postId":postId, "content":commentContent}
+                    , success:function(data) {
+                        if (data.code == 200) {
+                            location.reload();
+                        } else if (data.code == 403) {
+                            // 비로그인
+                            alert(data.error_message);
+                            location.href = "/user/sign-in-view"; // 로그인 화면으로 이동
+                        } else {
+                            alert(data.error_message);
+                        }
+                    }
+                    , error:function(e) {
+                        alert("댓글 쓰기에 실패했습니다.");
+                    }
+                });
             });
+
         });
     </script>
 </th:block>
