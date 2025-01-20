@@ -27,6 +27,12 @@ public class UserBO {
         return userRepository.findByLoginIdAndPassword(loginId, hashedPassword).orElse(null);
     }
 
+    // i: userId
+    // o: UserEntity
+    public UserEntity getUserEntityById(int userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
     // i: 4개 파라미터
     // o: UserEntity => boolean(true:성공)
     public boolean addUser(String loginId, String password, String name, String email) {
