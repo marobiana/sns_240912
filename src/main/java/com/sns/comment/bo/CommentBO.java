@@ -49,4 +49,8 @@ public class CommentBO {
 
         return commentDTOList;
     }
+
+    public void deleteCommentById(int commentId) {
+        commentMapper.deleteCommentById(commentId);
+    }
 }
