@@ -40,7 +40,7 @@ public class TimelineBO {
             card.setUser(user);
 
             // 댓글 N개
-            List<CommentDTO> commentList = commentBO.generateCommentList();
+            List<CommentDTO> commentList = commentBO.generateCommentListByPostId(postEntity.getId());
             card.setCommentList(commentList);
 
             // !!!!!!!!!! list에 꼭 담기
