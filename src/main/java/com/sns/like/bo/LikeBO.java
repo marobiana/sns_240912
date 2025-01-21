@@ -19,4 +19,10 @@ public class LikeBO {
             likeMapper.insertLike(postId, userId);
         }
     }
+
+    // i: postId
+    // o: int(개수)
+    public int getLikeCountByPostId(int postId) {
+        return likeMapper.selectLikeCountByPostId(postId);
+    }
 }

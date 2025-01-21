@@ -12,6 +12,15 @@
             AND `userId` = #{userId}
     </select>
 
+    <select id="selectLikeCountByPostId" parameterType="map" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM
+            `like`
+        WHERE
+            `postId` = #{postId}
+    </select>
+
     <insert id="insertLike" parameterType="map">
         INSERT INTO `like`
         (

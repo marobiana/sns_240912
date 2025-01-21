@@ -9,6 +9,8 @@ public interface LikeMapper {
             @Param("postId") int postId,
             @Param("userId") int userId);
 
+    public int selectLikeCountByPostId(int postId);
+
     public void insertLike(
             @Param("postId") int postId,
             @Param("userId") int userId);
