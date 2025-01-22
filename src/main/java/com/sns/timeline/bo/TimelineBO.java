@@ -22,9 +22,9 @@ public class TimelineBO {
     private final CommentBO commentBO;
     private final LikeBO likeBO;
 
-    // i: X
+    // i: userId(null 가능) - 비로그인 사용자도 타임라인 볼 수 있음
     // o: List<CardDTO>
-    public List<CardDTO> generateCardList() {
+    public List<CardDTO> generateCardList(Integer userId) {
         List<CardDTO> cardList = new ArrayList<>();
 
         // 글 목록 가져옴
@@ -48,6 +48,9 @@ public class TimelineBO {
             // 좋아요 개수
             int likeCount = likeBO.getLikeCountByPostId(postEntity.getId());
             card.setLikeCount(likeCount);
+
+            // 좋아요 여부 - true(채워진 하트), false(비워진 하트)
+            card.setFilledLike(likeBO.isFilledLikeByPostIdUserId(postEntity.getId(), userId));
 
             // !!!!!!!!!! list에 꼭 담기
             cardList.add(card);
