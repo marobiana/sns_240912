@@ -4,10 +4,7 @@ import com.sns.post.bo.PostBO;
 import com.sns.post.entity.PostEntity;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -19,6 +16,13 @@ import java.util.Map;
 public class PostRestController {
     private final PostBO postBO;
 
+    /**
+     * 글쓰기 API
+     * @param content
+     * @param file
+     * @param session
+     * @return
+     */
     @PostMapping("/create")
     public Map<String, Object> create(
             @RequestParam(value = "content", required = false) String content,
@@ -48,6 +52,26 @@ public class PostRestController {
             result.put("code", 500);
             result.put("error_message", "글을 쓰는데 실패했습니다.");
         }
+        return result;
+    }
+
+    @DeleteMapping("/delete")
+    public Map<String, Object> delete(
+            @RequestParam("postId") int postId,
+            HttpSession session
+    ) {
+        Map<String, Object> result = new HashMap<>();
+        Integer userId = (Integer)session.getAttribute("userId");
+        if (userId == null) {
+            result.put("code", 403);
+            result.put("error_message", "로그인이 필요합니다.");
+            return result;
+        }
+
+        postBO.deletePostByPostId(postId);
+
+        result.put("code", 200);
+        result.put("result", "성공");
         return result;
     }
 }

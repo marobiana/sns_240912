@@ -39,4 +39,8 @@ public class LikeBO {
         // 2) 로그인 => 누른적 없다 false
         return likeMapper.selectLikeCountByPostIdOrUserId(postId, userId) > 0;
     }
+
+    public void deleteLikesByPostId(int postId) {
+        likeMapper.deleteLikesByPostId(postId);
+    }
 }
